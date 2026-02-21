@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reel To Meal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 min-h-screen font-sans text-gray-800">
+    <nav class="p-6 flex justify-between items-center max-w-5xl mx-auto">
+        <a href="{% url 'index' %}" class="text-2xl font-bold text-indigo-600 tracking-tight">Reel To Meal 🍳</a>
+        <div>
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" class="mr-4 hover:text-indigo-500 font-medium transition">Dashboard</a>
+                <form action="{% url 'logout' %}" method="post" class="inline">
+                    {% csrf_token %}
+                    <button type="submit" class="px-4 py-2 bg-gray-200 rounded-full hover:bg-gray-300 transition text-sm font-medium">Log Out</button>
+                </form>
+            {% else %}
+                <span class="mr-4 text-sm text-gray-500">Guest Mode</span>
+                <a href="{% url 'login' %}" class="mr-2 hover:text-indigo-500 font-medium transition">Log In</a>
+                <a href="{% url 'signup' %}" class="px-4 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition shadow-lg shadow-indigo-200 text-sm font-medium">Sign Up</a>
+            {% endif %}
+        </div>
+    </nav>
+    <main class="max-w-4xl mx-auto mt-10 px-6">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
