@@ -5,7 +5,7 @@
 ## 📌 Project Overview
 **Reel To Meal** is a full-stack web application designed to bridge the gap between multimedia cooking content and actionable culinary data. The system utilizes the **Gemini 2.5 Flash** multimodal LLM to parse video URLs (specifically where login not required) and extract structured recipes, including ingredient quantities converted to SI units, required kitchen instrumentation, and step-by-step instructions.
 
-## 👥 Contributors (Group [Number/ID])
+## 👥 Contributors 
 *   **Shubham Mandal [2351129]** 
 *   **Shreya Yadav [2351162]** 
 *   **Lalit Snadhu [2351192]** 
