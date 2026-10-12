@@ -2,27 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reel To Meal</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans for a premium app feel -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Animate.css for entrance animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc; /* Tailwind slate-50 */
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 min-h-screen font-sans text-gray-800">
-    <nav class="p-6 flex justify-between items-center max-w-5xl mx-auto">
-        <a href="{% url 'index' %}" class="text-2xl font-bold text-indigo-600 tracking-tight">Reel To Meal 🍳</a>
-        <div>
-            {% if user.is_authenticated %}
-                <a href="{% url 'dashboard' %}" class="mr-4 hover:text-indigo-500 font-medium transition">Dashboard</a>
-                <form action="{% url 'logout' %}" method="post" class="inline">
-                    {% csrf_token %}
-                    <button type="submit" class="px-4 py-2 bg-gray-200 rounded-full hover:bg-gray-300 transition text-sm font-medium">Log Out</button>
-                </form>
-            {% else %}
-                <span class="mr-4 text-sm text-gray-500">Guest Mode</span>
-                <a href="{% url 'login' %}" class="mr-2 hover:text-indigo-500 font-medium transition">Log In</a>
-                <a href="{% url 'signup' %}" class="px-4 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition shadow-lg shadow-indigo-200 text-sm font-medium">Sign Up</a>
-            {% endif %}
+<body class="min-h-screen text-slate-800 flex flex-col">
+    <!-- Sticky Glassmorphism Navbar -->
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-slate-200 shadow-sm">
+        <div class="p-5 flex justify-between items-center max-w-6xl mx-auto">
+            <a href="{% url 'index' %}" class="text-2xl font-extrabold text-indigo-600 tracking-tight flex items-center gap-2">
+                Reel To Meal <span class="text-2xl">🍳</span>
+            </a>
+            <div class="flex items-center gap-6">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'dashboard' %}" class="text-slate-600 hover:text-indigo-600 font-semibold transition-colors">Dashboard</a>
+                    <form action="{% url 'logout' %}" method="post" class="inline m-0">
+                        {% csrf_token %}
+                        <button type="submit" class="px-5 py-2 bg-slate-100 text-slate-700 rounded-full hover:bg-slate-200 transition font-semibold text-sm">Log Out</button>
+                    </form>
+                {% else %}
+                    <span class="text-sm font-medium text-slate-400 hidden sm:inline">Guest Mode</span>
+                    <a href="{% url 'login' %}" class="text-slate-600 hover:text-indigo-600 font-semibold transition-colors">Log In</a>
+                    <a href="{% url 'signup' %}" class="px-5 py-2.5 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition shadow-lg shadow-indigo-200 font-semibold text-sm transform hover:scale-105">Sign Up</a>
+                {% endif %}
+            </div>
         </div>
     </nav>
-    <main class="max-w-4xl mx-auto mt-10 px-6">
+
+    <main class="flex-grow max-w-6xl mx-auto w-full mt-10 px-6 pb-20">
         {% block content %}{% endblock %}
     </main>
 </body>

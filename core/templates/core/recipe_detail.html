@@ -1,0 +1,90 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<div class="animate__animated animate__fadeIn">
+    
+    <a href="{% url 'dashboard' %}" class="inline-flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-indigo-600 transition-colors mb-6">
+        &larr; Back to Dashboard
+    </a>
+    
+    <div class="bg-white p-8 md:p-12 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100">
+        
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-100 pb-8 mb-8">
+            <div>
+                <h2 class="text-4xl font-extrabold text-slate-900 tracking-tight mb-3">{{ recipe.recipe_name }}</h2>
+                <a href="{{ video_url }}" target="_blank" class="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-800 font-bold transition-colors">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+                    Watch Original Video
+                </a>
+            </div>
+            <div class="mt-4 md:mt-0 bg-slate-50 px-6 py-3 rounded-2xl border border-slate-100">
+                <span class="text-slate-500 text-sm font-semibold uppercase tracking-wider block mb-1">Serving Size</span>
+                <span class="text-xl font-extrabold text-slate-800">{{ recipe.serving_size }}</span>
+            </div>
+        </div>
+        
+        <div class="grid lg:grid-cols-12 gap-12">
+            <!-- INGREDIENTS & QUICK BUY (Left side, takes 5 columns) -->
+            <div class="lg:col-span-5">
+                <h3 class="text-2xl font-extrabold text-slate-900 mb-6 flex items-center gap-2">
+                    🛒 Ingredients & Quick Buy
+                </h3>
+                
+                <div class="space-y-4">
+                    {% for ingredient in recipe.ingredients %}
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="font-bold text-lg text-slate-800">{{ ingredient.name }}</span>
+                                <span class="font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg text-sm">{{ ingredient.quantity_si }}</span>
+                            </div>
+                            
+                            <!-- QUICK COMMERCE BUTTONS -->
+                            <div class="flex flex-wrap gap-2 text-xs font-bold">
+                                <a href="https://blinkit.com/s/?q={{ ingredient.name|urlencode }}" target="_blank" 
+                                   class="bg-[#F8CB46] text-black px-3 py-1.5 rounded-lg hover:brightness-95 transition-all shadow-sm">
+                                   Blinkit
+                                </a>
+                                <a href="https://www.zeptonow.com/search?query={{ ingredient.name|urlencode }}" target="_blank" 
+                                   class="bg-[#3A1078] text-white px-3 py-1.5 rounded-lg hover:brightness-110 transition-all shadow-sm">
+                                   Zepto
+                                </a>
+                                <a href="https://www.bigbasket.com/ps/?q={{ ingredient.name|urlencode }}" target="_blank" 
+                                   class="bg-[#84C225] text-white px-3 py-1.5 rounded-lg hover:brightness-95 transition-all shadow-sm">
+                                   BigBasket
+                                </a>
+                                <a href="https://www.flipkart.com/search?q={{ ingredient.name|urlencode }}&marketplace=HYPERLOCAL" target="_blank" 
+                                   class="bg-[#2874F0] text-white px-3 py-1.5 rounded-lg hover:brightness-95 transition-all shadow-sm">
+                                   Flipkart
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- INSTRUCTIONS & INSTRUMENTS (Right side, takes 7 columns) -->
+            <div class="lg:col-span-7">
+                <div class="mb-10 p-6 bg-slate-50 rounded-3xl border border-slate-100">
+                    <h3 class="text-xl font-extrabold text-slate-900 mb-4 flex items-center gap-2">🔪 Instruments Needed</h3>
+                    <div class="flex flex-wrap gap-2">
+                        {% for item in recipe.instruments %}
+                            <span class="bg-white border border-slate-200 shadow-sm text-slate-700 px-4 py-2 rounded-xl text-sm font-semibold">{{ item }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <h3 class="text-2xl font-extrabold text-slate-900 mb-6 flex items-center gap-2">🍳 Instructions</h3>
+                <ol class="space-y-6">
+                    {% for step in recipe.instructions %}
+                        <li class="flex gap-4 items-start group">
+                            <span class="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-indigo-100 text-indigo-700 font-extrabold rounded-full group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-300">
+                                {{ forloop.counter }}
+                            </span>
+                            <p class="text-slate-600 font-medium leading-relaxed mt-1.5 text-lg">{{ step }}</p>
+                        </li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

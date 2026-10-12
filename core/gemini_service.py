@@ -1,4 +1,3 @@
-# core/gemini_service.py
 import json
 from google import genai
 from google.genai import types
@@ -22,19 +21,14 @@ def extract_recipe_from_video(youtube_url):
     
     prompt = "Watch this cooking video. Extract the recipe, convert all measurements to SI units, and list the cooking instruments used."
     
-    # FIX 1: Explicitly define the YouTube URL as a video part
     video_part = types.Part.from_uri(
         file_uri=youtube_url,
-        mime_type="video/mp4" # This tells Gemini to treat the YouTube link as a video file
+        mime_type="video/mp4" 
     )
     
-    # FIX 2: Fallback to gemini-2.5-flash to ensure model availability
     response = client.models.generate_content(
         model="gemini-2.5-flash", 
-        contents=[
-            prompt, 
-            video_part # Pass the specially formatted video part here
-        ],
+        contents=[prompt, video_part],
         config=types.GenerateContentConfig(
             response_mime_type="application/json",
             response_schema=RecipeSchema,

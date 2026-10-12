@@ -38,7 +38,7 @@ B --> C{User Authenticated?}
 C -- Yes --> D[Save Search to DB]
 C -- No --> E[Process as Guest]
 B --> F[YouTube Transcript API]
-F --> G[Gemini 1.5 Flash Model]
+F --> G[Gemini 2.5 Flash Model]
 G --> H[JSON Parser]
 H --> I[UI Response: Recipe Card]
 ```

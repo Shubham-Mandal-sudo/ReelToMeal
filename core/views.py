@@ -1,5 +1,5 @@
 # core/views.py
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -30,6 +30,8 @@ def index(request):
                 request.session['guest_history'] = guest_history[:5] # Keep last 5
                 
         except Exception as e:
+            # FIX: Print the exact error to your console so you know what failed!
+            print(f"FAILED TO GENERATE RECIPE: {e}") 
             error = "Could not process the video. Please ensure the link is valid."
 
     return render(request, 'core/index.html', {'recipe': recipe, 'error': error})
@@ -75,3 +77,14 @@ def custom_signup(request):
             return redirect('dashboard')
             
     return render(request, 'registration/signup.html', {'error': error})
+
+@login_required
+def recipe_detail(request, recipe_id):
+    # Fetch the recipe, ensuring it belongs to the logged-in user
+    history_item = get_object_or_404(RecipeHistory, id=recipe_id, user=request.user)
+    
+    # We pass the saved JSON data to the template
+    return render(request, 'core/recipe_detail.html', {
+        'recipe': history_item.recipe_data,
+        'video_url': history_item.video_url
+    })
