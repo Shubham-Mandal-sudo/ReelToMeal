@@ -1,4 +1,3 @@
-```markdown
 # Reel To Meal: AI-Powered Recipe Extraction & Quick-Commerce System
 
 **Live Deployment:** [https://reeltomeel.pythonanywhere.com/](https://reeltomeel.pythonanywhere.com/)
